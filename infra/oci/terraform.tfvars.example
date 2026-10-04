@@ -1,0 +1,19 @@
+tenancy_ocid      = "ocid1.tenancy.oc1..CHANGE_ME"
+compartment_ocid  = "ocid1.compartment.oc1..CHANGE_ME"
+region            = "sa-saopaulo-1"
+oci_profile       = "DEFAULT"
+kubernetes_version = "v1.CHANGE_ME"
+node_image_ocid   = "ocid1.image.oc1.sa-saopaulo-1.CHANGE_ME"
+ssh_public_key    = "ssh-ed25519 CHANGE_ME"
+api_allowed_cidr  = "203.0.113.10/32"
+
+# Fill these only after inventorying every existing instance and volume.
+# The values are remaining capacity, not the total tenancy allowance.
+remaining_free_a1_ocpus          = 0
+remaining_free_a1_memory_gb      = 0
+remaining_free_block_storage_gb  = 0
+
+# Start with one minimal worker. Scale to two only after confirming capacity.
+node_count        = 1
+node_ocpus        = 1
+node_memory_gb    = 6

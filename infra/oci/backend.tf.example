@@ -1,0 +1,8 @@
+terraform {
+  backend "oci" {
+    bucket    = "CHANGE_ME-terraform-state"
+    namespace = "CHANGE_ME"
+    key        = "sre-platform-lab/terraform.tfstate"
+    region     = "sa-saopaulo-1"
+  }
+}
