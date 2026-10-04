@@ -32,6 +32,27 @@ jobs:
           push: false
           tags: sre-platform-api:${{ github.sha }}
           load: true
+      - name: Diagnose image contents
+        run: |
+          IMG=sre-platform-api:${{ github.sha }}
+          echo "== pip list =="
+          docker run --rm --entrypoint python "$IMG" -m pip list 2>/dev/null | grep -iE '^(msgpack|setuptools|urllib3) ' || true
+          echo "== dist-info / diretorios encontrados =="
+          docker run --rm --entrypoint sh "$IMG" -c 'find / \( -path /proc -o -path /sys \) -prune -o \( -iname "msgpack-*" -o -iname "setuptools-*" -o -iname "urllib3-*" \) -print 2>/dev/null'
+          echo "== arquivos SBOM/SPDX/CycloneDX =="
+          docker run --rm --entrypoint sh "$IMG" -c 'find / \( -path /proc -o -path /sys \) -prune -o \( -iname "*sbom*" -o -iname "*.spdx*" -o -iname "*.cdx*" -o -iname "*bom.json" \) -print 2>/dev/null' || true
+      - name: Trivy JSON (diagnostico, nao falha)
+        uses: aquasecurity/trivy-action@v0.35.0
+        with:
+          image-ref: sre-platform-api:${{ github.sha }}
+          format: json
+          output: trivy-diag.json
+          exit-code: "0"
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+      - name: Mostrar origem dos achados
+        run: |
+          jq -r '.Results[]? | select(.Vulnerabilities) | .Target as $t | .Type as $ty | .Vulnerabilities[] | [$t, $ty, .PkgName, .InstalledVersion, .VulnerabilityID, (.PkgPath // "-")] | @tsv' trivy-diag.json
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@v0.35.0
         with:
