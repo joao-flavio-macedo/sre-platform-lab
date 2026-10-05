@@ -1,19 +1,22 @@
-tenancy_ocid      = "ocid1.tenancy.oc1..CHANGE_ME"
-compartment_ocid  = "ocid1.compartment.oc1..CHANGE_ME"
-region            = "sa-saopaulo-1"
-oci_profile       = "DEFAULT"
-kubernetes_version = "v1.CHANGE_ME"
-node_image_ocid   = "ocid1.image.oc1.sa-saopaulo-1.CHANGE_ME"
-ssh_public_key    = "ssh-ed25519 CHANGE_ME"
-api_allowed_cidr  = "203.0.113.10/32"
+# Valores REAIS do laboratorio — nenhum campo abaixo e credencial
+# (apenas OCIDs, regiao e shape). Dois campos mudam por maquina/rede:
+#   - api_allowed_cidr : IP publico de onde voce acessa a API do cluster
+#   - ssh_public_key   : chave publica gerada em ~/.ssh no SEU laptop
+tenancy_ocid        = "ocid1.tenancy.oc1..aaaaaaaa2wrrvaxmhngghdqv22ixjshp3v6zdy34bn3u4wz5q2fqcgubrhlq"
+compartment_ocid    = "ocid1.compartment.oc1..aaaaaaaaglvzjv7g4doe7gx3urjzxmjchusallyn44dlel7jziuam7zs7qia"
+region              = "sa-saopaulo-1"
+kubernetes_version  = "v1.36.4"
+node_image_ocid     = "ocid1.image.oc1.sa-saopaulo-1.aaaaaaaa4idtwcgqfx236pkni4ckccf6nzks7p4ha43gayyncswnqt36ho7q"
+ssh_public_key      = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDz2sqBlJy8T/YhPIPHvzZ8qvXxwIQuGZgEeiQ2m2N+W jflav@GRANTITAN"
+api_allowed_cidr    = "176.223.52.164/32"
 
-# Fill these only after inventorying every existing instance and volume.
-# The values are remaining capacity, not the total tenancy allowance.
-remaining_free_a1_ocpus          = 0
-remaining_free_a1_memory_gb      = 0
-remaining_free_block_storage_gb  = 0
+# Capacidade Always Free RESTANTE (nao e a cota total da tenancy).
+# Preencher so depois de inventariar cada instancia e volume existentes.
+remaining_free_a1_ocpus          = 1
+remaining_free_a1_memory_gb      = 10
+remaining_free_block_storage_gb  = 103  # provisorio — auditoria pendente nos 4 compartimentos filhos
 
-# Start with one minimal worker. Scale to two only after confirming capacity.
-node_count        = 1
-node_ocpus        = 1
-node_memory_gb    = 6
+# Comece com um worker minimo. Escale para dois so apos confirmar capacidade.
+node_count     = 1
+node_ocpus     = 1
+node_memory_gb = 10
