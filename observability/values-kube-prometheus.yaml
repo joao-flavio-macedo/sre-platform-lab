@@ -1,0 +1,28 @@
+# Perfil enxuto para nó único A1.Flex — orçamento alvo: ~+0,8Gi no nó
+grafana:
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits: { cpu: 300m, memory: 256Mi }
+  persistence:
+    enabled: false            # dashboards como código; sem PV para o Grafana
+
+prometheus:
+  prometheusSpec:
+    retention: 3d
+    resources:
+      requests: { cpu: 100m, memory: 256Mi }
+      limits: { cpu: 500m, memory: 768Mi }
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: oci-bv    # ajuste se o kubectl get sc mostrar outra default
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+    # A linha que evita o mistério do "target que nunca aparece":
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+
+alertmanager:
+  enabled: false             # lab: sem roteamento de alertas por enquanto
