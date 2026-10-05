@@ -34,7 +34,7 @@ containerSecurityContext:
       - ALL
 
 serviceMonitor:
-  enabled: false
+  enabled: true
   interval: 30s
 
 ingress:
