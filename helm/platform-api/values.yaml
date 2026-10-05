@@ -36,3 +36,7 @@ containerSecurityContext:
 serviceMonitor:
   enabled: false
   interval: 30s
+
+ingress:
+  enabled: true
+  className: traefik
