@@ -30,7 +30,7 @@ prometheus:
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 5Gi
+              storage: 50Gi   # decisão: PVC real já é 50Gi — cabe no always free, headroom p/ retention 3d; reduzir = recriar volume (destrutivo)
     # A linha que evita o mistério do "target que nunca aparece":
     serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false
